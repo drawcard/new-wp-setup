@@ -146,6 +146,12 @@ fi
 }
 cleanup
 
+# Set correct permissions
+echo "${green}Set correct file (644) and folder (755) permissions..."
+cd ${devfolder}${domainname}/www/
+find . -type f -exec chmod 644 {} \;
+find . -type d -exec chmod 755 {} \;
+
 # Report results at the end of the script
 echo "${magenta}"
 echo "Congratulations! Your new WP installation details are:"
