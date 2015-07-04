@@ -118,13 +118,16 @@ if [[ $answer = y ]] ; then
   cd ${devfolder}${domainname}/www/
   wp theme activate $theme
   echo "${blue}Sage theme framework is installed and activated.${fix}"
-  echo "${yellow}/!\ You will need to run the following before you begin development otherwise your theme will look broken on the frontend:${fix}"
+  echo "${yellow}/!\ You will need to run the following from your theme folder *before* you begin development otherwise your theme will look broken on the frontend:${fix}"
   echo "${yellow}    sudo npm install -g npm@latest"
   echo "${yellow}    sudo npm install -g gulp bower"
   echo "${yellow}    npm install && bower install"
-  echo "${yellow} Visit https://github.com/roots/sage for more set up instructions.${fix}"
+  echo "${yellow}    gulp build" 
+  echo "${yellow} Visit https://github.com/roots/sage for more information on using Sage.${fix}"
+  echo "${magenta}-----------${fix}"
   echo "${magenta}Sage has been installed to: ${devfolder}${domainname}/www/wp-content/themes/$theme/${fix}"
   echo "${magenta}Sage's bare repo location is: ${devfolder}${domainname}/www/wp-content/themes/$barerepo/${fix}"
+  echo "${magenta}-----------${fix}"
   echo "${yellow}/!\ Use the bare repo location to clone the theme folder to other locations.${fix}"
 fi
 }
