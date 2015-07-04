@@ -125,10 +125,10 @@ if [[ $answer = y ]] ; then
   echo "${yellow} Visit https://github.com/roots/sage for more set up instructions.${fix}"
   echo "${magenta}Sage has been installed to: ${devfolder}${domainname}/www/wp-content/themes/$theme/${fix}"
   echo "${magenta}Sage's bare repo location is: ${devfolder}${domainname}/www/wp-content/themes/$barerepo/${fix}"
+  echo "${yellow}/!\ Use the bare repo location to clone the theme folder to other locations.${fix}"
 fi
 }
 roots_theme
-
 
 extras () {
 read -p "${green}Install and activate extra plugins? [y/n]${fix}" answer
