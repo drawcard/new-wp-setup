@@ -97,12 +97,21 @@ if [[ $answer = y ]] ; then
   # run the command
   cd ${devfolder}${domainname}/www/
   echo "define('WP_ENV', 'development'); /* <--- Remove this line when you have finished theme development and you've run 'gulp build' in the Sage theme directory. More info: https://roots.io/sage/docs/theme-installation/ */" >> wp-config.php
+  sagetheme="https://github.com/roots/sage.git"
   theme="$cleanname-theme"
-  echo "${blue}Cloning Sage from Github to wp-content/themes/${theme}...${fix}"
+  barerepo="$theme-barerepo"
+  echo "${blue}Creating bare repo + cloning Sage from Github to wp-content/themes/${theme}...${fix}"
   cd wp-content/themes
-  git clone https://github.com/roots/sage.git $theme
+  git clone --bare $sagetheme $barerepo
+  cd $barerepo
+  touch .htaccess
+  echo "deny from all" >> .htaccess
+  cd ..
+  git clone $barerepo $theme
   cd $theme
+  git remote add upstream $sagetheme
   git fetch origin
+  git fetch upstream
   echo "${blue}Creating a 'dev' branch for you to work in...${fix}"
   git checkout -b dev
   echo "Activating theme..."
@@ -115,6 +124,7 @@ if [[ $answer = y ]] ; then
   echo "${yellow}    npm install && bower install"
   echo "${yellow} Visit https://github.com/roots/sage for more set up instructions.${fix}"
   echo "${magenta}Sage has been installed to: ${devfolder}${domainname}/www/wp-content/themes/$theme/${fix}"
+  echo "${magenta}Sage's bare repo location is: ${devfolder}${domainname}/www/wp-content/themes/$barerepo/${fix}"
 fi
 }
 roots_theme
