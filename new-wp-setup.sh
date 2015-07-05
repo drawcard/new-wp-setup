@@ -160,10 +160,14 @@ fi
 cleanup
 
 # Set correct permissions
-echo "${green}Set correct file (644) and folder (755) permissions..."
+echo "${green}Set correct file (644) and folder (755) permissions...${fix}"
 cd ${devfolder}${domainname}/www/
 find . -type f -exec chmod 644 {} \;
 find . -type d -exec chmod 755 {} \;
+
+#Misc setup stuff
+echo "${green}Nearly done...${fix}"
+wp rewrite structure --hard '/%year%/%monthnum%/%day%/%postname%' #Fixes permalink issues
 
 # Report results at the end of the script
 echo "${magenta}"
