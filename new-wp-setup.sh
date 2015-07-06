@@ -121,7 +121,7 @@ if [[ $answer = y ]] ; then
   echo "${yellow}/!\ You will need to run the following from your theme folder *before* you begin development otherwise your theme will look broken on the frontend:${fix}"
   echo "${yellow}    sudo npm install -g npm@latest"
   echo "${yellow}    sudo npm install -g gulp bower"
-  echo "${yellow}    npm install && bower install"
+  echo "${yellow}    sudo npm install && bower install"
   echo "${yellow}    gulp build" 
   echo "${yellow} Visit https://github.com/roots/sage for more information on using Sage.${fix}"
   echo "${magenta}-----------${fix}"
