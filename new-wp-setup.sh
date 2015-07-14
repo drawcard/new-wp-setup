@@ -142,6 +142,7 @@ if [[ $answer = y ]] ; then
   wp plugin install --activate coming-soon # https://wordpress.org/plugins/coming-soon/
   wp plugin install --activate wp-super-cache # https://wordpress.org/plugins/wp-super-cache/
   wp plugin install --activate si-contact-form # https://wordpress.org/plugins/si-contact-form/
+  wp plugin install --activate bootstrap-3-shortcodes # https://wordpress.org/plugins/bootstrap-3-shortcodes/
   wp plugin install --activate https://github.com/wp-sync-db/wp-sync-db/archive/master.zip # https://github.com/wp-sync-db/wp-sync-db
   wp plugin install --activate https://github.com/wp-sync-db/wp-sync-db-media-files/archive/master.zip # https://github.com/wp-sync-db/wp-sync-db-media-files
 fi
