@@ -138,6 +138,7 @@ read -p "${green}Install and activate extra plugins? [y/n]${fix}" answer
 if [[ $answer = y ]] ; then
   # run the command
   cd ${devfolder}${domainname}/www/
+  ## General plugins
   wp plugin activate akismet # https://wordpress.org/plugins/akismet/
   wp plugin install --activate coming-soon # https://wordpress.org/plugins/coming-soon/
   wp plugin install --activate wp-super-cache # https://wordpress.org/plugins/wp-super-cache/
@@ -145,9 +146,14 @@ if [[ $answer = y ]] ; then
   wp plugin install --activate bootstrap-3-shortcodes # https://wordpress.org/plugins/bootstrap-3-shortcodes/
   wp plugin install --activate wpautop-control # https://wordpress.org/plugins/wpautop-control/
   wp plugin install --activate tinymce-advanced # https://wordpress.org/plugins/tinymce-advanced/
+  wp plugin install --activate wordpress-seo # https://wordpress.org/plugins/wordpress-seo/
+  ## WP sync plugins
   wp plugin install --activate https://github.com/wp-sync-db/wp-sync-db/archive/master.zip # https://github.com/wp-sync-db/wp-sync-db
   wp plugin install --activate https://github.com/wp-sync-db/wp-sync-db-media-files/archive/master.zip # https://github.com/wp-sync-db/wp-sync-db-media-files
-  wp plugin install --activate wordpress-seo # https://wordpress.org/plugins/wordpress-seo/
+  ## Roots Theme-specific plugins
+  wp plugin install --activate https://github.com/roots/roots-wrapper-toolbar/archive/master.zip # https://github.com/roots/roots-wrapper-toolbar
+  # wp plugin install --activate https://github.com/roots/soil/archive/master.zip #https://github.com/roots/soil
+  wp plugin install --activate https://github.com/roots/roots-wrapper-toolbar/archive/sagesupport.zip #https://github.com/roots/soil - Temporary branch with Sage support
 fi
 }
 extras
