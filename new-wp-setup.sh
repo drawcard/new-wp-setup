@@ -163,7 +163,7 @@ read -p "${green}Clean up unused plugins & themes? [y/n]${fix}" answer
 if [[ $answer = y ]] ; then
   # run the command
   cd ${devfolder}${domainname}/www/
-  wp plugin uninstall hello-dolly
+  wp plugin uninstall hello
   wp theme delete twentyfourteen twentythirteen
 fi
 }
