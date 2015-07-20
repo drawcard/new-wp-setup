@@ -152,9 +152,9 @@ if [[ $answer = y ]] ; then
   wp plugin install --activate https://github.com/wp-sync-db/wp-sync-db/archive/master.zip # https://github.com/wp-sync-db/wp-sync-db
   wp plugin install --activate https://github.com/wp-sync-db/wp-sync-db-media-files/archive/master.zip # https://github.com/wp-sync-db/wp-sync-db-media-files
   ## Roots Theme-specific plugins
-  wp plugin install --activate https://github.com/roots/roots-wrapper-toolbar/archive/master.zip # https://github.com/roots/roots-wrapper-toolbar
-  # wp plugin install --activate https://github.com/roots/soil/archive/master.zip #https://github.com/roots/soil
+  ## wp plugin install --activate https://github.com/roots/roots-wrapper-toolbar/archive/master.zip # https://github.com/roots/roots-wrapper-toolbar
   wp plugin install --activate https://github.com/roots/roots-wrapper-toolbar/archive/sagesupport.zip #https://github.com/roots/soil - Temporary branch with Sage support
+  wp plugin install --activate https://github.com/roots/soil/archive/master.zip #https://github.com/roots/soil
 fi
 }
 extras
