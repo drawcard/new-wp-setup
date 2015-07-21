@@ -96,7 +96,16 @@ read -p "${green}Install Sage framework theme? Requires NPM / Gulp / Bower. More
 if [[ $answer = y ]] ; then
   # run the command
   cd ${devfolder}${domainname}/www/
-  echo "define('WP_ENV', 'development'); /* <--- Remove this line when you have finished theme development and you've run 'gulp build' in the Sage theme directory. More info: https://roots.io/sage/docs/theme-installation/ */" >> wp-config.php
+
+# Insert Development Environment variable into line 3 of wp-config.php
+ed -s wp-config.php << DEV_ENV
+3i
+define('WP_ENV', 'development'); // Remove this line when you have finished theme development and you've run 'gulp build' in the Sage theme directory. More info: https://roots.io/sage/docs/theme-installation/ 
+.
+w
+q
+DEV_ENV
+  
   sagetheme="https://github.com/roots/sage.git"
   theme="$cleanname-theme"
   barerepo="$theme-barerepo"
@@ -121,7 +130,7 @@ if [[ $answer = y ]] ; then
   echo "${yellow}/!\ You will need to run the following from your theme folder *before* you begin development otherwise your theme will look broken on the frontend:${fix}"
   echo "${yellow}    $ npm install -g npm@latest"
   echo "${yellow}    $ npm install -g gulp bower"
-  echo "${yellow}    $ npm install && bower install"
+  echo "${yellow}    $ npm install bower install"
   echo "${yellow}    $ gulp build" 
   echo "${yellow} Visit https://github.com/roots/sage for more information on using Sage.${fix}"
   echo "${magenta}-----------${fix}"
@@ -161,12 +170,25 @@ fi
 extras
 
 cleanup () {
-read -p "${green}Clean up unused plugins & themes? [y/n]${fix}" answer
+read -p "${green}Clean up unused plugins & themes, and activate PHP debug mode for WP? [y/n]${fix}" answer
 if [[ $answer = y ]] ; then
   # run the command
   cd ${devfolder}${domainname}/www/
   wp plugin uninstall hello
   wp theme delete twentyfourteen twentythirteen
+  
+# Insert Debug variables into line 3 of wp-config.php
+ed -s wp-config.php << DEBUG_CODE
+3i
+define('WP_DEBUG', true); // Enable Wordpress PHP debugging
+define('WP_DEBUG_LOG', true); // Keep a log of all PHP issues in /wp-content/debug.log
+define('WP_DEBUG_DISPLAY', false); // Suppress warning / error messages from being publicly viewable
+@ini_set('display_errors',0); // Suppress warning / error messages from being publicly viewable
+.
+w
+q
+DEBUG_CODE
+
 fi
 }
 cleanup
