@@ -148,6 +148,7 @@ if [[ $answer = y ]] ; then
   wp plugin install --activate tinymce-advanced # https://wordpress.org/plugins/tinymce-advanced/
   wp plugin install --activate wordpress-seo # https://wordpress.org/plugins/wordpress-seo/
   wp plugin install --activate wp-emmet # https://wordpress.org/plugins/wp-emmet/
+  wp plugin install --activate regenerate-thumbnails # https://wordpress.org/plugins/regenerate-thumbnails/
   ## WP sync plugins
   wp plugin install --activate https://github.com/wp-sync-db/wp-sync-db/archive/master.zip # https://github.com/wp-sync-db/wp-sync-db
   wp plugin install --activate https://github.com/wp-sync-db/wp-sync-db-media-files/archive/master.zip # https://github.com/wp-sync-db/wp-sync-db-media-files
