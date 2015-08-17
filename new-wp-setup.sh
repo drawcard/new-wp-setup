@@ -151,7 +151,8 @@ if [[ $answer = y ]] ; then
   wp plugin activate akismet # https://wordpress.org/plugins/akismet/
   wp plugin install --activate coming-soon # https://wordpress.org/plugins/coming-soon/
   wp plugin install --activate wp-super-cache # https://wordpress.org/plugins/wp-super-cache/
-  wp plugin install --activate si-contact-form # https://wordpress.org/plugins/si-contact-form/
+  wp plugin install --activate contact-form-7 # https://wordpress.org/plugins/contact-form-7/
+    wp plugin install --activate really-simple-captcha # https://wordpress.org/plugins/really-simple-captcha/
   wp plugin install --activate bootstrap-3-shortcodes # https://wordpress.org/plugins/bootstrap-3-shortcodes/
   wp plugin install --activate wpautop-control # https://wordpress.org/plugins/wpautop-control/
   wp plugin install --activate tinymce-advanced # https://wordpress.org/plugins/tinymce-advanced/
