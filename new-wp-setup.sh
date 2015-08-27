@@ -28,7 +28,7 @@ pwgen=`tr -dc A-Za-z0-9 < /dev/urandom | head -c ${1:-12} | xargs`
 pwgen2=`tr -dc A-Za-z0-9 < /dev/urandom | head -c ${1:-12} | xargs`
 
 #Generate random table prefix for additional security: https://digwp.com/2010/10/change-database-prefix/
-tableprefix=`tr -dc A-Za-z0-9 < /dev/urandom | head -c ${1:-5} | xargs`
+tableprefix=`tr -dc A-Za-z0-9 < /dev/urandom | head -c ${1:-5} | xargs` . `_`
 
 # Welcome
 echo "${yellow}"
