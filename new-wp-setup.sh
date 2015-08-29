@@ -30,7 +30,7 @@ pwgen2=`tr -dc A-Za-z0-9 < /dev/urandom | head -c ${1:-12} | xargs`
 #Generate random table prefix for additional security: https://digwp.com/2010/10/change-database-prefix/
 #Generate random table prefix for additional security: https://digwp.com/2010/10/change-database-prefix/
 trandom=`tr -dc A-Za-z0-9 < /dev/urandom | head -c ${1:-5} | xargs`
-tseperator=`_`
+tseperator=`-`
 tableprefix=$trandom$tseperator
 
 # Welcome
