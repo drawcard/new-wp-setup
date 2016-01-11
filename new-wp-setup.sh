@@ -74,9 +74,8 @@ dbpw="${pwgen}"
 
 #Generate random table prefix for additional security: https://digwp.com/2010/10/change-database-prefix/
 #trandom=`tr -dc A-Za-z0-9 < /dev/urandom | head -c ${1:-5} | xargs`
-ttruncate=`echo ${cleanname} | rev | cut -c 1-3` #use some letters to make up a prefix
-tseperator=`-`
-tableprefix=$ttruncate$tseperator
+ttruncate=`echo ${cleanname} | cut -c 1-3 | rev` #use some letters to make up a prefix
+tableprefix=`echo ${ttruncate}_`
 
 mysql -u "$mysqluser" -p"$mysqlpw" << End-MySQL-Commands
 
