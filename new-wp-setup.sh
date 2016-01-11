@@ -27,12 +27,6 @@ rightnow=`date +%Y%m%d` #Get the date and time to add onto the database name to 
 pwgen=`tr -dc A-Za-z0-9 < /dev/urandom | head -c ${1:-12} | xargs`
 pwgen2=`tr -dc A-Za-z0-9 < /dev/urandom | head -c ${1:-12} | xargs`
 
-#Generate random table prefix for additional security: https://digwp.com/2010/10/change-database-prefix/
-#Generate random table prefix for additional security: https://digwp.com/2010/10/change-database-prefix/
-trandom=`tr -dc A-Za-z0-9 < /dev/urandom | head -c ${1:-5} | xargs`
-tseperator=`-`
-tableprefix=$trandom$tseperator
-
 # Welcome
 echo "${yellow}"
 echo "-----------------------"
@@ -77,6 +71,12 @@ cleanname=`echo -n $clean | tr A-Z a-z` #Lowercase everything
 dbname="${dbprefix}_${cleanname}_${rightnow}"
 dbuser=`echo ${dbprefix}_${cleanname} | cut -c 1-16` #shorten the name to 16 characters or less
 dbpw="${pwgen}"
+
+#Generate random table prefix for additional security: https://digwp.com/2010/10/change-database-prefix/
+#trandom=`tr -dc A-Za-z0-9 < /dev/urandom | head -c ${1:-5} | xargs`
+ttruncate=`echo ${cleanname} | rev | cut -c 1-3` #use some letters to make up a prefix
+tseperator=`-`
+tableprefix=$ttruncate$tseperator
 
 mysql -u "$mysqluser" -p"$mysqlpw" << End-MySQL-Commands
 
