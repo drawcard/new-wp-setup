@@ -264,7 +264,7 @@ define('FS_METHOD','direct'); // Solves an issue when attempting to install plug
 .
 w
 q
-DEV_ENV
+DIRECT_ACCESS
 
 
 #Misc setup stuff
