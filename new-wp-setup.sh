@@ -9,7 +9,6 @@ devfolder="/var/www/clients/" #The folder path to your development sites directo
 dbprefix="wp" #The prefix you want to add to DB names - default is wp. Don't change unless you have to.
 dbloc="localhost" #Where your MYSQL database is located - default is localhost. Don't change unless you have to.
 
-
 #Text colours - http://stackoverflow.com/a/20983251
 fix=`tput sgr0` #Reset style
 red=`tput setaf 1`
@@ -27,6 +26,12 @@ rightnow=`date +%Y%m%d` #Get the date and time to add onto the database name to 
 pwgen=`tr -dc A-Za-z0-9 < /dev/urandom | head -c ${1:-12} | xargs`
 pwgen2=`tr -dc A-Za-z0-9 < /dev/urandom | head -c ${1:-12} | xargs`
 
+# Plugin arrays: http://www.thegeekstuff.com/2010/06/bash-array-tutorial/
+# These are the plugins that will be installed if the user chooses 
+pSage=(https://github.com/roots/roots-wrapper-toolbar/archive/master.zip https://github.com/roots/roots-wrapper-toolbar/archive/sagesupport.zip https://github.com/roots/soil/archive/master.zip)
+pDevelopment=(coming-soon wpautop-control wp-emmet https://github.com/wp-sync-db/wp-sync-db/archive/master.zip https://github.com/wp-sync-db/wp-sync-db-media-files/archive/master.zip);
+pUtilities=(bootstrap-3-shortcodes wp-super-cache wordpress-seo akismet contact-form-7 really-simple-captcha tinymce-advanced wpautop-control regenerate-thumbnails html-editor-syntax-highlighter);
+
 # Welcome
 echo "${yellow}"
 echo "-----------------------"
@@ -36,17 +41,17 @@ echo "-----------------------"
 echo "/!\ You will need to install WP-CLI if you haven't done so - http://wp-cli.org"
 echo "/!\ Edit this script first and change the configuration settings to suit your workspace!"
 echo "-----------------------"
-echo "${fix}"
-sleep 1
+echo "${fix}" ; sleep 2
+
 
 # Set up WP files
-echo "${cyan}>> What Wordpress account name would you like to use? (TIP: Don't use 'admin' for security reasons! No spaces, alphanumeric characters only.)${fix}"
+echo "${cyan}>> What Wordpress account name would you like to use? (TIP: Don't use 'admin' for security reasons! No spaces, alphanumeric characters only.)${fix}" 
 read adminname
-echo "${cyan}>> What is your email address, to help retrieve lost account information? ${fix}"
+echo "${cyan}>> What is your email address, to help retrieve lost account information? ${fix}" 
 read email
-echo "${cyan}>> What is the domain name for the installation? ${blue}eg. projectname.com.au ${fix}"
+echo "${cyan}>> What is the domain name for the installation? ${blue}eg. projectname.com.au ${fix}" 
 read domainname
-echo "${green}Setting up ${domainname} at ${devfolder}${domainname}/www/ ... ${fix}"
+echo "${green}Setting up ${domainname} at ${devfolder}${domainname}/www/ ... ${fix}" ; sleep 2
 
 cd $devfolder
 mkdir $domainname
@@ -56,7 +61,7 @@ cd www
 wp core download
 
 #Set up MYSQL DB
-echo "${green}Setting up database in MYSQL...${fix}"
+echo "${green}Setting up database in MYSQL...${fix}" ; sleep 2
 echo "Please enter your MYSQL user name:${fix}"
 read mysqluser
 echo "Please enter your MYSQL user password:${fix}"
@@ -86,15 +91,18 @@ flush privileges;
 
 End-MySQL-Commands
 
-echo "${green}Database setup complete!${fix}"
-echo "${green}Configuring wp-config.php...${fix}"
+echo "${green}Database setup complete!${fix}" ; sleep 2
+echo "${green}Configuring wp-config.php...${fix}" ; sleep 2
 wp core config --dbname=$dbname --dbuser=$dbuser --dbpass=$dbpw --dbprefix=$tableprefix # http://wp-cli.org/commands/core/config/ for more options
 
-echo "${green}Installing Wordpress...${fix}"
+echo "${green}Installing Wordpress...${fix}" ; sleep 2
 wp core install --url=$wwwlink$domainname/www/ --admin_user=$adminname --title=WordPress --admin_password=$pwgen2 --admin_email=$email # http://wp-cli.org/commands/core/install/ for more options
 
 roots_theme () {
-read -p "${green}Install Sage framework theme? Requires NPM / Gulp / Bower. More info: https://github.com/roots/sage. Additional setup is required after activation. [y/n]${fix}" answer
+read -p "${green}Install Sage framework theme & helper plugins? [y/n] 
+* Requires NPM / Gulp / Bower. More info: https://github.com/roots/sage. 
+* Additional setup is required after activation. 
+* Please review the instructions as they are presented.${fix}" answer
 if [[ $answer = y ]] ; then
   # run the command
   cd ${devfolder}${domainname}/www/
@@ -111,7 +119,7 @@ DEV_ENV
   sagetheme="https://github.com/roots/sage.git"
   theme="$cleanname-theme"
   barerepo="$theme-barerepo"
-  echo "${blue}Creating bare repo + cloning Sage from Github to wp-content/themes/${theme}...${fix}"
+  echo "${blue}Creating bare repo + cloning Sage from Github to wp-content/themes/${theme}...${fix}" ; sleep 2
   cd wp-content/themes
   git clone --bare $sagetheme $barerepo
   cd $barerepo
@@ -123,11 +131,33 @@ DEV_ENV
   git remote add upstream $sagetheme
   git fetch origin
   git fetch upstream
-  echo "${blue}Creating a 'dev' branch for you to work in...${fix}"
+  echo "${blue}Creating a 'dev' branch for you to work in...${fix}" ; sleep 2
   git checkout -b dev
   echo "Activating theme..."
   cd ${devfolder}${domainname}/www/
   wp theme activate $theme
+  
+#Install Sage plugins
+echo "${blue}Installing and activating Sage plugins...${fix}" 
+
+cd ${devfolder}${domainname}/www/
+#iterate through the array
+  for i in "${pSage[@]}"
+    do
+      #print the plugins in the array
+	    echo "${blue}"
+	    echo $i
+	    echo "${fix}" 
+    done
+    sleep 2
+  
+#iterate through the array
+  for i in "${pSage[@]}"
+    do
+      #install each plugin
+	    wp plugin install --activate $i
+    done 
+
   echo "${blue}Sage theme framework is installed and activated.${fix}"
   echo "${yellow}/!\ You will need to run the following from your theme folder *before* you begin development otherwise your theme will look broken on the frontend:${fix}"
   echo "${yellow}    $ npm install -g npm@latest"
@@ -139,38 +169,46 @@ DEV_ENV
   echo "${magenta}Sage's bare repo location is: ${devfolder}${domainname}/www/wp-content/themes/$barerepo/${fix}"
   echo "${magenta}-----------${fix}"
   echo "${yellow}/!\ Use the bare repo location to clone the theme folder to other locations.${fix}"
+  sleep 2
 fi
 }
 roots_theme
 
-extras () {
-read -p "${green}Install and activate extra plugins? [y/n]${fix}" answer
+plugin_dev () {
+read -p "${green}Install and activate development plugins? [y/n]
+------------------
+Plugins: `echo ${pDevelopment[@]}`
+${fix}
+" answer
 if [[ $answer = y ]] ; then
-  # run the command
-  cd ${devfolder}${domainname}/www/
-  ## General plugins
-  wp plugin activate akismet # https://wordpress.org/plugins/akismet/
-  wp plugin install --activate coming-soon # https://wordpress.org/plugins/coming-soon/
-  wp plugin install --activate wp-super-cache # https://wordpress.org/plugins/wp-super-cache/
-  wp plugin install --activate contact-form-7 # https://wordpress.org/plugins/contact-form-7/
-    wp plugin install --activate really-simple-captcha # https://wordpress.org/plugins/really-simple-captcha/
-  wp plugin install --activate bootstrap-3-shortcodes # https://wordpress.org/plugins/bootstrap-3-shortcodes/
-  wp plugin install --activate wpautop-control # https://wordpress.org/plugins/wpautop-control/
-  wp plugin install --activate tinymce-advanced # https://wordpress.org/plugins/tinymce-advanced/
-  wp plugin install --activate wordpress-seo # https://wordpress.org/plugins/wordpress-seo/
-  wp plugin install --activate wp-emmet # https://wordpress.org/plugins/wp-emmet/
-  wp plugin install --activate regenerate-thumbnails # https://wordpress.org/plugins/regenerate-thumbnails/
-  wp plugin install --activate html-editor-syntax-highlighter # https://wordpress.org/plugins/html-editor-syntax-highlighter/
-  ## WP sync plugins
-  wp plugin install --activate https://github.com/wp-sync-db/wp-sync-db/archive/master.zip # https://github.com/wp-sync-db/wp-sync-db
-  wp plugin install --activate https://github.com/wp-sync-db/wp-sync-db-media-files/archive/master.zip # https://github.com/wp-sync-db/wp-sync-db-media-files
-  ## Roots Theme-specific plugins
-  ## wp plugin install --activate https://github.com/roots/roots-wrapper-toolbar/archive/master.zip # https://github.com/roots/roots-wrapper-toolbar
-  wp plugin install --activate https://github.com/roots/roots-wrapper-toolbar/archive/sagesupport.zip #https://github.com/roots/soil - Temporary branch with Sage support
-  wp plugin install --activate https://github.com/roots/soil/archive/master.zip #https://github.com/roots/soil
+cd ${devfolder}${domainname}/www/
+#iterate through the array
+  for i in "${pDevelopment[@]}"
+    do
+      #install each plugin
+	    wp plugin install --activate $i
+    done 
 fi
 }
-extras
+plugin_dev
+
+plugin_utilities () {
+read -p "${green}Install and activate utilities plugins? [y/n]
+------------------
+Plugins: `echo ${pUtilities[@]}`
+${fix}
+" answer
+if [[ $answer = y ]] ; then
+cd ${devfolder}${domainname}/www/
+#iterate through the array
+  for i in "${pUtilities[@]}"
+    do
+      #install each plugin
+	    wp plugin install --activate $i
+    done 
+fi
+}
+plugin_utilities
 
 cleanup () {
 read -p "${green}Clean up unused plugins & themes, and activate PHP debug mode for WP? [y/n]${fix}" answer
@@ -178,7 +216,7 @@ if [[ $answer = y ]] ; then
   # run the command
   cd ${devfolder}${domainname}/www/
   wp plugin uninstall hello
-  wp theme delete twentyfourteen twentythirteen
+  wp theme delete twentyfourteen twentythirteen twentyfifteen 
   
 # Insert Debug variables into line 3 of wp-config.php
 ed -s wp-config.php << DEBUG_CODE
@@ -197,10 +235,17 @@ fi
 cleanup
 
 # Set correct permissions
-echo "${green}Set correct file (644) and folder (755) permissions...${fix}"
+echo "${green}Set correct file (644) and folder (755) permissions... (sudo access may be required)${fix}"
 cd ${devfolder}${domainname}/www/
-find . -type f -exec chmod 644 {} \;
-find . -type d -exec chmod 755 {} \;
+touch .htaccess
+sudo chown www-data:www-data .htaccess
+sudo chown www-data:www-data wp-content/
+sudo chown -R www-data:www-data wp-content/uploads/
+sudo chown -R www-data:www-data wp-content/plugins/
+find . -type f -exec sudo chmod 644 {} \;
+find . -type d -exec sudo chmod 755 {} \;
+sudo chmod 660 wp-config.php
+
 
 #Misc setup stuff
 echo "${green}Nearly done...${fix}"
