@@ -67,9 +67,9 @@ wp core download
 
 #Set up MYSQL DB
 echo "${green}Setting up database in MYSQL...${fix}" ; sleep 2
-echo "Please enter your MYSQL user name:${fix}"
+echo "Please enter your MYSQL user name: ${fix}"
 read mysqluser
-echo "Please enter your MYSQL user password:${fix}"
+echo "Please enter your MYSQL user password: ${fix}"
 read -s mysqlpw
 
 #Sanitize project name for DB
@@ -104,10 +104,11 @@ echo "${green}Installing Wordpress...${fix}" ; sleep 2
 wp core install --url=$wwwlink$domainname/www/ --admin_user=$adminname --title=WordPress --admin_password=$pwgen2 --admin_email=$email # http://wp-cli.org/commands/core/install/ for more options
 
 roots_theme () {
-read -p "${green}Install Sage framework theme & helper plugins? [y/n] > 
+read -p "${green}Install Sage framework theme & helper plugins?  
 * Requires NPM / Gulp / Bower. More info: https://github.com/roots/sage. 
 * Additional setup is required after activation. 
-* Please review the instructions as they are presented.${fix}" answer
+* Please review the instructions as they are presented.${fix}
+[y/n] > " answer
 if [[ $answer = y ]] ; then
   # run the command
   cd ${devfolder}${domainname}/www/
@@ -253,12 +254,17 @@ cd ${devfolder}${domainname}/www/
 touch .htaccess
 mkdir wp-content/uploads/
 sudo chown www-data:www-data .htaccess
-sudo chown www-data:www-data wp-content/
-sudo chown -R www-data:www-data wp-content/uploads/
-sudo chown -R www-data:www-data wp-content/plugins/
+sudo chown www-data:www-data -R wp-content/
 find . -type f -exec sudo chmod 644 {} \;
 find . -type d -exec sudo chmod 755 {} \;
 sudo chmod 660 wp-config.php
+ed -s wp-config.php << DIRECT_ACCESS
+3i
+define('FS_METHOD','direct'); // Solves an issue when attempting to install plugins and an FTP connection is requested
+.
+w
+q
+DEV_ENV
 
 
 #Misc setup stuff
