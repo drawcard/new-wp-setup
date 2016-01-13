@@ -99,7 +99,7 @@ echo "${green}Installing Wordpress...${fix}" ; sleep 2
 wp core install --url=$wwwlink$domainname/www/ --admin_user=$adminname --title=WordPress --admin_password=$pwgen2 --admin_email=$email # http://wp-cli.org/commands/core/install/ for more options
 
 roots_theme () {
-read -p "${green}Install Sage framework theme & helper plugins? [y/n] 
+read -p "${green}Install Sage framework theme & helper plugins? [y/n] > 
 * Requires NPM / Gulp / Bower. More info: https://github.com/roots/sage. 
 * Additional setup is required after activation. 
 * Please review the instructions as they are presented.${fix}" answer
@@ -138,22 +138,16 @@ DEV_ENV
   wp theme activate $theme
   
 #Install Sage plugins
-echo "${blue}Installing and activating Sage plugins...${fix}" 
-
+echo "${blue}Installing and activating Sage plugins...${fix}" ; sleep 2
 cd ${devfolder}${domainname}/www/
 #iterate through the array
   for i in "${pSage[@]}"
     do
-      #print the plugins in the array
-	    echo "${blue}"
+      #print the plugin name
+	    echo "${green} --- Installing Plugin:"
 	    echo $i
 	    echo "${fix}" 
-    done
-    sleep 2
-  
-#iterate through the array
-  for i in "${pSage[@]}"
-    do
+	    sleep 1
       #install each plugin
 	    wp plugin install --activate $i
     done 
@@ -175,9 +169,11 @@ fi
 roots_theme
 
 plugin_dev () {
-read -p "${green}Install and activate development plugins? [y/n]
+read -p "${green}Install and activate development plugins? 
 ------------------
 Plugins: `echo ${pDevelopment[@]}`
+------------------
+[y/n] > 
 ${fix}
 " answer
 if [[ $answer = y ]] ; then
@@ -185,6 +181,11 @@ cd ${devfolder}${domainname}/www/
 #iterate through the array
   for i in "${pDevelopment[@]}"
     do
+      #print the plugin name
+	    echo "${green} --- Installing Plugin:"
+	    echo $i
+	    echo "${fix}" 
+	    sleep 1
       #install each plugin
 	    wp plugin install --activate $i
     done 
@@ -193,9 +194,11 @@ fi
 plugin_dev
 
 plugin_utilities () {
-read -p "${green}Install and activate utilities plugins? [y/n]
+read -p "${green}Install and activate utilities plugins? 
 ------------------
 Plugins: `echo ${pUtilities[@]}`
+------------------
+[y/n] > 
 ${fix}
 " answer
 if [[ $answer = y ]] ; then
@@ -203,6 +206,11 @@ cd ${devfolder}${domainname}/www/
 #iterate through the array
   for i in "${pUtilities[@]}"
     do
+      #print the plugin name
+	    echo "${green} --- Installing Plugin:"
+	    echo $i
+	    echo "${fix}" 
+	    sleep 1
       #install each plugin
 	    wp plugin install --activate $i
     done 
@@ -211,7 +219,7 @@ fi
 plugin_utilities
 
 cleanup () {
-read -p "${green}Clean up unused plugins & themes, and activate PHP debug mode for WP? [y/n]${fix}" answer
+read -p "${green}Clean up unused plugins & themes, and activate PHP debug mode for WP? [y/n] > ${fix}" answer
 if [[ $answer = y ]] ; then
   # run the command
   cd ${devfolder}${domainname}/www/
@@ -238,6 +246,7 @@ cleanup
 echo "${green}Set correct file (644) and folder (755) permissions... (sudo access may be required)${fix}"
 cd ${devfolder}${domainname}/www/
 touch .htaccess
+mkdir wp-content/uploads/
 sudo chown www-data:www-data .htaccess
 sudo chown www-data:www-data wp-content/
 sudo chown -R www-data:www-data wp-content/uploads/
