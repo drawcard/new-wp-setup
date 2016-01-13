@@ -42,7 +42,7 @@ echo "/!\ You will need to install WP-CLI if you haven't done so - http://wp-cli
 echo "/!\ Edit this script first and change the configuration settings to suit your workspace!"
 echo "/!\ Sudo access may be requested, to set the correct permissions for your Wordpress installation."
 echo "-----------------------"
-echo "${fix}" ; sleep 2
+echo "${fix}" 
 
 pause(){
  read -n1 -rsp $'Press any key to continue or Ctrl+C to exit...\n'
