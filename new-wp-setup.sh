@@ -28,7 +28,7 @@ pwgen2=`tr -dc A-Za-z0-9 < /dev/urandom | head -c ${1:-12} | xargs`
 
 # Plugin arrays: http://www.thegeekstuff.com/2010/06/bash-array-tutorial/
 # These are the plugins that will be installed if the user chooses 
-pSage=(https://github.com/roots/roots-wrapper-toolbar/archive/master.zip https://github.com/roots/roots-wrapper-toolbar/archive/sagesupport.zip https://github.com/roots/soil/archive/master.zip)
+pSage=(https://github.com/roots/roots-wrapper-toolbar/archive/sagesupport.zip https://github.com/roots/soil/archive/master.zip)
 pDevelopment=(coming-soon wpautop-control wp-emmet https://github.com/wp-sync-db/wp-sync-db/archive/master.zip https://github.com/wp-sync-db/wp-sync-db-media-files/archive/master.zip);
 pUtilities=(pods bootstrap-3-shortcodes wp-super-cache wordpress-seo akismet contact-form-7 really-simple-captcha tinymce-advanced wpautop-control regenerate-thumbnails html-editor-syntax-highlighter);
 
