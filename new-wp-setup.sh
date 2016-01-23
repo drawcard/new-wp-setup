@@ -253,8 +253,10 @@ echo "${green}Set correct file (644) and folder (755) permissions... (sudo acces
 cd ${devfolder}${domainname}/www/
 touch .htaccess
 mkdir wp-content/uploads/
-sudo chown www-data:www-data .htaccess
-sudo chown www-data:www-data -R wp-content/
+sudo chgrp www-data -R .
+sudo chown www-data .htaccess
+sudo chown www-data -R wp-content/plugins/
+sudo chown www-data -R wp-content/uploads/
 find . -type f -exec sudo chmod 644 {} \;
 find . -type d -exec sudo chmod 755 {} \;
 sudo chmod 660 wp-config.php
