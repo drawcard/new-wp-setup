@@ -135,8 +135,7 @@ DEV_ENV
   git clone $barerepo $theme
   cd $theme
   git remote add upstream $sagetheme
-  git fetch origin
-  git fetch upstream
+  git fetch --all
   echo "${blue}Creating a 'dev' branch for you to work in...${fix}" ; sleep 2
   git checkout -b dev
   echo "Activating theme..."
