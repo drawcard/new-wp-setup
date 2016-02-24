@@ -1,3 +1,6 @@
+# Warning!
+### This is a personal project / experiment and is not in any way, shape or form supported or updated regularly. But feel free to study it, and learn neat stuff.
+
 # new-wp-setup
 A handy script to help create new Wordpress installations using WP-CLI. Better docs will be here momentarily. New-WP-Setup is the name until I come up with something more flashy.
 
